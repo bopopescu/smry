@@ -1,0 +1,169 @@
+<!-- About Regional Summary Page Template
+        W. R. Emanuel, University of Maryland, College Park
+        E-Mail: wemanuel@umd.edu
+        Gmail: wemanuel@gmail.com
+
+        Version 1 is based on the Regional Summary Page Template.
+-->
+
+{% extends "base.html" %}
+
+{% block title %}About Regional Land Cover Summary{% endblock %}
+
+<!-- Header Material -->
+{% block header_image %}
+    <div>
+        <img src = "/static/smry/images/1873_US_Forest_Map_1030x60.png">
+    </div>
+{% endblock %}
+
+<!-- Primary Page Content -->
+{% block page_heading %}
+    {{year}} {{rgn_name}} Region Land Cover Summary
+{% endblock %}
+
+{% block page_content %}
+    <table width=1030>
+
+        <!-- Heading row -->
+        <tr>
+            <td style="font-family: Verdana; font-weight: bold; 
+                        font-size: 12pt" width=300 align=center>
+            </td>
+            <td style="font-family: Verdana; font-weight: bold; 
+                        font-size: 12pt" width=300 align=center>
+                Land Cover Distribution</td>
+        </tr>
+
+        <!-- Introductory text row. Spans 3 columns --->
+        <tr>
+            <td colspan="3">
+                {{ intro_txt }}
+            </td>
+        </tr>
+
+        <!-- First content row -->
+        <tr>
+            <!-- Small map image. -->
+            <td>
+                {% load static %}
+                {% static image_filename as filename %}
+                {% static large_image_filename as filename_large %}
+                <a href = "{{ filename_large }}",
+                    data-lightbox="{{ filename_large }}",
+                    data-title="{{ region }} {{ year }}">
+                <img src = "{{ filename }}",
+                            alt = "Land Cover Map">
+                <a>
+            </td>
+            <!-- Small pie chart. -->
+            <td>
+                {% load static %}
+                {% static pie_chart_filename as pie_chart_filename %}
+                <img src = "{{ pie_chart_filename }}",
+                            alt = "Pie Chart of Land Cover Distribution">
+            </td>
+            <!-- About MODIS maps and pie charts. -->
+            <td align=left>
+                {{ modis_txt }}
+            </td>
+        </tr>
+
+        <!-- Heading row -->
+        <tr>
+            <td style="font-family: Verdana; font-weight: bold; 
+                        font-size: 12pt" colspan="2" align=center>
+                Fraction of Area by Cover Type (%)</td>
+            <td></td>
+        </tr>
+
+        <!-- Second content row. -->
+        <tr>
+            <td>
+                <!-- Land cover distribution table. -->
+                <table>
+                    <tr>
+                        <td style="font-family: Verdana; font-weight: bold; 
+                                    font-size: 8pt" width=60 align=center>Key</td>
+                        <td style="font-family: Verdana; font-weight: bold; 
+                                    font-size: 8pt"  width=300 align=center>Name</td>
+                        <td style="font-family: Verdana; font-weight: bold; 
+                                    font-size: 8pt"  width=100 align=center>Fraction (%)</td>
+                    </tr>
+        
+                    {% for key, name, prc in table_list %}
+                        <tr>
+                            <td style="font-family: Verdana; font-weight: normal; 
+                                    font-size: 8pt" align=center>{{ key }}</td>
+                            <td style="font-family: Verdana; font-weight: normal; 
+                                    font-size: 8pt" align=left>{{ name }}</td>
+                            <td style="font-family: Verdana; font-weight: normal; 
+                                    font-size: 8pt" align=right>{{ prc }}</td>
+                        </tr>
+                    {% endfor %}
+
+                </table>
+            </td>
+            <td valign=top align=center>
+                {% load static %}
+                {% static plot_filename as plot_filename %}
+                <img src = "{{ plot_filename }}",
+                            alt = "Plot of Land Cover Distribution through Time">
+            </td> 
+            <td valign=top align=left>
+                {{ smry_txt }}
+            </td>
+        </tr>
+        
+        {% if vcf_image_filename %}
+            <!-- Heading row -->
+            <tr>
+                <td style="font-family: Verdana; font-weight: bold; 
+                            font-size: 12pt" colspan="2" align=center>
+                    Tree Cover Fraction of Area (%)</td>
+                <td></td>
+            </tr>
+            
+            <!-- VCF Content row -->
+            <tr>
+                <td>
+                    {% load static %}
+                    {% static vcf_image_filename as filename %}
+                    {% static large_vcf_image_filename as filename_large %}
+                    <a href = "{{ filename_large }}",
+                    data-lightbox="{{ filename_large }}",
+                    data-title="{{ region }} {{ year }}">
+                        <img src = "{{ filename }}",
+                                    alt = "Fraction of Tree Cover Map">
+                    </a>
+                </td>
+                <td valign=top align=center>
+                    {% load static %}
+                    {% static vcf_distr_plot_filename as vcf_distr_plot_filename %}
+                    <img src = "{{ vcf_distr_plot_filename }}",
+                                alt = "Plot of Tree Cover Fraction by Land Cover Class">
+                </td>
+                <td>
+                    {{ vcf_txt }}
+                </td>
+            </tr>
+        {% endif %}
+
+    </table>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

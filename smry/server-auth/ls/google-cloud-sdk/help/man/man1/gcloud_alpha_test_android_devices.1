@@ -1,0 +1,60 @@
+.TH "GCLOUD ALPHA TEST ANDROID DEVICES" "1" "" "" ""
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.nh
+.ad l
+.SH "NAME"
+.HP
+gcloud_alpha_test_android_devices \- explore Android testing device environments and characteristics
+.SH "SYNOPSIS"
+.sp
+gcloud alpha test android devices \fICOMMAND\fR [\fIGLOBAL\-FLAG \&...\fR]
+.SH "DESCRIPTION"
+.sp
+\fB(ALPHA)\fR Explore Android testing device environments and characteristics\&.
+.SH "GLOBAL FLAGS"
+.sp
+Run \fB$ \fR\fBgcloud\fR\fB help\fR for a description of flags available to all commands\&.
+.SH "COMMANDS"
+.sp
+\fICOMMAND\fR is one of the following:
+.HP
+\fBdescribe\fR
+Describe the characteristics of a specific Android test device in detail\&.
+.RE
+.PP
+\fBlist\fR
+.RS 4
+\fB(ALPHA)\fR
+List all Android device environments available for testing\&.
+.RE
+.SH "EXAMPLES"
+.sp
+To list all Android devices available for running tests, run:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ gcloud alpha test android devices list
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+To display detailed information about a specific Android device, run:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ gcloud alpha test android devices describe DEVICE_ID
+.fi
+.if n \{\
+.RE
+.\}
+.SH "NOTES"
+.sp
+This command is in the Google Cloud SDK \fBgcloud\fR component\&. See installing components if it is not installed\&.
+.sp
+This command is currently in ALPHA and may change without notice\&.

@@ -1,0 +1,29 @@
+<!-- U.S. Land Cover Indicators Front Page (Home)
+        W. R. Emanuel, University of Maryland, College Park
+        E-Mail: wemanuel@umd.edu
+        Gmail: wemanuel@gmail.com -->
+
+{% extends "base.html" %}
+
+{% block intro_text %}
+    {% autoescape off %}
+    {{ intro_text|safe }}
+    {% endautoescape %}
+{% endblock %}
+
+<!-- Figure showing NCA regions and introduction to NCA. -->
+{% block page_content %}
+<tr>
+    <!-- Image showing NCA regions. -->
+    <td width=600><img src = "/static/smry/images/RegionMap_Labels_600px.jpg"></td>
+
+    <!-- Introduction to the NCA. -->
+    <td width=430 valign=top colspan="2">
+            {% autoescape off %}
+            {{ intro_text_1|safe }}
+            {% endautoescape %}
+    </td>
+</tr>
+{% endblock %}
+
+
