@@ -1,0 +1,229 @@
+<!-- Regional Summary Template
+        W. R. Emanuel, Charlottesville, Virginia, USA
+        E-Mail: wre@thenandchange.org
+        Gmail: wemanuel@gmail.com
+        
+        Version 2.1
+
+        Version 2.1 incorporates plots of the distribution of tree cover fraction
+        by land cover class.
+        
+        Version 2.0 incorporates maps of tree cover fraction (VCF)
+-->
+
+{% extends "base.html" %}
+
+{% block title %}Regional Land Cover Summary{% endblock %}
+
+<!-- Header Material -->
+{% block header_image %}
+    <div>
+        <img src = "/static/smry/images/1873_US_Forest_Map_1030x60.png">
+    </div>
+{% endblock %}
+
+<!-- Primary Page Content -->
+
+<!--Forms -->
+<div style="font-family: Verdana; font-weight: bold; font-size: 12pt">
+<table width=1030>
+    <tr width="100%">
+        <td> 
+            <!-- Region-Year Form. Both region and year can be selected. -->
+            {% block region_year_form %}
+            <form action="smry/rgn_smry/" method="post">
+                {% csrf_token %}
+                <table>
+                    <tr>
+                        <td>
+                            <label for="{{ form.region.id_for_label }}">Region:</label>
+                            {{ form.region }}
+                        </td>
+                        <td>
+                            <label for="{{ form.year.id_for_label }}">Year:</label>
+                            {{ form.year }}
+                        </td>
+                        <td>
+                            <label for="{{ form.dscrpt_txt.id_for_label }}">Text:</label>
+                            {{ form.dscrpt_txt }}
+                        </td>
+                        <td>
+                            <input type="submit" value="Submit" />
+                        </td>
+                        <td width=480 align=right>
+                            <div style="font-weight: normal; font-size: 10pt">
+                                {{ form_help }} 
+                            </div>
+                        </td>
+                    </tr>
+                </table>      
+            </form>  
+            {% endblock %}
+        </td>
+    </tr>
+</table>
+</div>
+
+{% block page_heading %}
+    {{ year }} {{ rgn_name }} Region Land Cover Summary
+{% endblock %}
+
+<!-- Introductory text. -->
+{% block intro_text %}
+    {% if dscrpt_txt %}
+        <div> {{ intro_txt|safe }} </div>
+    {% endif %}
+{% endblock %}
+
+{% block page_content %}
+
+
+    <!-- Heading row -->
+    <tr>
+        <td style="font-family: Verdana; font-weight: bold; 
+                    font-size: 12pt" width=300 align=center>
+        </td>
+        <td style="font-family: Verdana; font-weight: bold; 
+                    font-size: 12pt" width=300 align=center>
+            Land Cover Distribution</td>
+        <td></td>
+    </tr>
+
+
+    <!-- First content row -->
+    <tr>
+        <!-- Small map image. -->
+        <td>
+            {% load static %}
+            {% static image_filename as filename %}
+            {% static large_image_filename as filename_large %}
+            <a href = "{{ filename_large }}",
+                data-lightbox="{{ filename_large }}",
+                data-title="{{ region }} {{ year }}">
+            <img src = "{{ filename }}",
+                        alt = "Land Cover Map">
+            </a>
+        </td>
+        <!-- Small pie chart. -->
+        <td>
+            {% load static %}
+            {% static pie_chart_filename as pie_chart_filename %}
+            <a href="smry/rgn_pie_charts/">
+            <img src = "{{ pie_chart_filename }}",
+                        alt = "Pie Chart of Land Cover Distribution">
+            </a>
+        </td>
+        <!-- Color Legend. -->
+        <td align=left>
+            <img src = "/static/smry/images/LndCvr_ClrLgnd_200px.png">
+        </td>
+    </tr>
+
+    <!-- Heading row -->
+    <tr>
+        <td style="font-family: Verdana; font-weight: bold; 
+                    font-size: 12pt" colspan="2" align=center>
+            Fraction of Area by Cover Type (%)</td>
+        <td></td>
+    </tr>
+
+    <!-- Second content row. Three table columns.-->
+    <tr>
+        <td>
+            <!-- Land cover distribution table. -->
+            <table>
+                <tr>
+                    <td style="font-family: Verdana; font-weight: bold; 
+                                font-size: 8pt" width=60 align=center>Key</td>
+                    <td style="font-family: Verdana; font-weight: bold; 
+                                font-size: 8pt"  width=300 align=center>Name</td>
+                    <td style="font-family: Verdana; font-weight: bold; 
+                                font-size: 8pt"  width=100 align=center>Fraction (%)</td>
+                </tr>
+    
+                {% for key, name, prc in table_list %}
+                    <tr>
+                        <td style="font-family: Verdana; font-weight: normal; 
+                                font-size: 8pt" align=center>{{ key }}</td>
+                        <td style="font-family: Verdana; font-weight: normal; 
+                                font-size: 8pt" align=left>{{ name }}</td>
+                        <td style="font-family: Verdana; font-weight: normal; 
+                                font-size: 8pt" align=right>{{ prc }}</td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+        </td>
+        <td valign=top align=center>
+            {% load static %}
+            {% static plot_filename as plot_filename %}
+            <img src = "{{ plot_filename }}",
+                        alt = "Plot of Land Cover Distribution through Time">
+        </td> 
+        <td width=330 valign=top align=left>
+            <img src = "/static/smry/images/PltLgnd_80pct.png">
+            {% if dscrpt_txt %}
+                <div>{{ trends_txt|safe }}</div>
+            {% endif %}
+        </td>
+    </tr>
+    
+    {% if vcf_image_filename %}
+        <!-- Heading row -->
+        <tr>
+            <td style="font-family: Verdana; font-weight: bold; 
+                        font-size: 12pt" colspan="2" align=center>
+                Tree Cover Fraction of Area (%)</td>
+            <td></td>
+        </tr>
+        
+        <!-- VCF Content row -->
+        <tr>
+            <!-- VCF - land cover distribution plot -->
+            <td>
+                {% load static %}
+                {% static vcf_image_filename as filename %}
+                {% static large_vcf_image_filename as filename_large %}
+                <a href = "{{ filename_large }}",
+                data-lightbox="{{ filename_large }}",
+                data-title="{{ region }} {{ year }}">
+                    <img src = "{{ filename }}",
+                                alt = "Fraction of Tree Cover Map">
+                </a>
+            </td>
+            <td valign=top align=center>
+                {% load static %}
+                {% static vcf_distr_plot_filename as vcf_distr_plot_filename %}
+                <img src = "{{ vcf_distr_plot_filename }}",
+                            alt = "Plot of Tree Cover Fr80action by Land Cover Class">
+            </td>
+
+            <!-- VCF-land cover distribution legend -->
+            <td width=330 valign=top align=left>
+            <img src="/static/smry/images/vcf_lndcvr_plt_lgnd_80px.png"
+                                            align=left hspace=10 vspace=10>
+            {% if dscrpt_txt %}
+                {{ vcf_txt|safe }}
+            {% endif %}
+            </td>
+        </tr>
+    {% endif %}
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

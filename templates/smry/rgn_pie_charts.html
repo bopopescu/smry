@@ -1,0 +1,150 @@
+<!-- Regional Pie Chart Display Page Template
+        W. R. Emanuel, University of Maryland, College Park
+        E-Mail: wemanuel@umd.edu
+        Gmail: wemanuel@gmail.com -->
+
+{% extends "base.html" %}
+
+{% block title %}Land Cover Distribution Charts{% endblock %}
+
+<!-- Header Material -->
+{% block header_image %}
+    <div>
+        <img src = "/static/smry/images/1873_US_Forest_Map_1030x60.png">
+    </div>
+{% endblock %}
+
+<!--Forms -->
+<div style="font-family: Verdana; font-weight: bold; font-size: 12pt">
+<table width=1030>
+    <tr width="100%">
+        <td> 
+            <!-- Region-Year Form. Both region and year can be selected. -->
+            {% block region_year_form %}
+            <form action="smry/rgn_pie_charts/" method="post">
+                {% csrf_token %}
+                <table>
+                    <tr>
+                        <td width=40 align=left><a href="smry/rgn_smry/">
+                            <img src="/static/smry/images/nav_arrow_back_30px.png"></a>
+                        </td>
+                        <td>
+                            <label for="{{ form.region.id_for_label }}">Region:</label>
+                            {{ form.region }}
+                        </td>
+                        <td>
+                            <label for="{{ form.year.id_for_label }}">Year:</label>
+                            {{ form.year }}
+                        </td>
+                        <td>
+                            <label for="{{ form.dscrpt_txt.id_for_label }}">Text:</label>
+                            {{ form.dscrpt_txt }}
+                        </td>
+                        <td>
+                            <input type="submit" value="Submit" />
+                        </td>
+                        <td width=480 align=right>
+                            <div style="font-weight: normal; font-size: 10pt">
+                                {{ form_help }} 
+                            </div>
+                        </td>
+                    </tr>
+                </table>      
+            </form>  
+            {% endblock %}
+        </td>
+    </tr>
+</table>
+</div>
+
+<!-- Primary Page Content -->
+{% block page_heading %}
+    {{year}} {{rgn_name}} Land Cover Distirbutions
+{% endblock %}
+
+<!-- Introductory text. -->
+{% block intro_text %}
+{% endblock %}
+
+<!-- Distribution pie charts. -->
+{% block page_content %}
+
+<!-- Eight row table contains headings (year) and
+        associated pie chart -->
+<tr>
+<td colspan="3">
+<table width=1030, cellpadding=0, cellspacing=0>
+
+    <!-- Years 0 and 1 Labels -->
+    <tr style="font-family: Verdana; font-weight: bold; 
+                    font-size: 12pt" align=center>
+        <td>{{ chart_year_list.0 }}</td><td>{{ chart_year_list.1 }}</td>
+
+    <!-- Years 0 and 1 Charts --> 
+    <tr>
+        <!-- Year 0 -->
+        <td>
+            {% load static %}
+            {% static filenames.0 as filename %}
+            <img src="{{ filename }}",
+            alt="{{ region }} {{ chart_year_list.0 }} Land Cover Distribution">
+        </td>
+        
+        <!-- Year 1 -->
+        <td>
+            {% load static %}
+            {% static filenames.1 as filename %}
+            <img src="{{ filename }}",
+                alt="{{ region }} {{ chart_year_list.1 }} Land Cover Distribution">
+        </td>
+    </tr>
+
+    <!-- Years 2 and 3 Labels -->
+    <tr style="font-family: Verdana; font-weight: bold; 
+                    font-size: 12pt" align=center>
+        <td>{{ chart_year_list.2 }}</td><td>{{ chart_year_list.3 }}</td>
+    <tr>
+
+    <!-- Years 2 and 3 Charts -->
+    <tr>
+        <!-- Year 2 -->
+        <td>
+            {% load static %}
+            {% static filenames.2 as filename %}
+            <img src="{{ filename }}",
+                alt="{{ region }} {{ chart_year_list.2 }} Land Cover Distribution">
+        </td>
+        
+        <!-- Year 3 -->
+        <td>
+            {% load static %}
+            {% static filenames.3 as filename %}
+            <img src="{{ filename }}",
+                alt="{{ region }} {{ chart_year_list.3 }} Land Cover Distribution">
+        </td>
+    </tr>
+</table>
+</td>
+</tr>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

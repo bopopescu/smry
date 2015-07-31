@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- U.S. Land Cover Indicators - Base Template
+        W. R. Emanuel, Charlottesville, Virginia, USA
+        E-Mail: wre@thenandchange.org
+        Gmail: wemanuel@gmail.com -->
+
+<head>
+    <title>{% block title %}U.S. Land Cover{% endblock %}</title>
+    
+    <!-- Base URL -->
+    <!--
+    <base href="http://thenandchange.org/Indicators/">
+    -->
+    <base href="http://symon/Indicators/">
+
+    {% load staticfiles %}
+
+    <!-- Primary CSS style sheet. -->
+    <link rel="stylesheet" type="text/css"
+                    href="{% static 'smry/style.css' %}" />
+
+    <!-- Light Box Javascript and CSS ctyle sheet -->
+    <script type="text/javascript"
+                    src="{% static 'smry/jquery-1.11.0.min.js' %}">
+    </script>
+    <script type="text/javascript"
+                    src="{% static 'smry/lightbox.min.js' %}">
+    </script>
+    <link rel="stylesheet" type="text/css"
+                    href="{% static 'smry/lightbox.css' %}" />
+
+    {% block head_scripts %}
+
+    {% endblock %}
+ 
+</head>
+
+<body>
+
+    <!-- Header Material -->
+    <table width={{ width }}>
+        <!-- Main Menu -->
+        {% block main_menu %}
+        <tr>
+            <td>
+                <div id="navigation" style="width: {{ width }}">
+                    <a href="smry/">Home</a>
+                    <a href="smry/rgn_smry/">Regions</a>
+                    <a href="smry/rgn_map/">Maps</a>
+                    <a href="smry/land_cover/">EE</a>
+                    <a href="smry/about/">About</a>
+                </div>
+            </td>
+        </tr>
+        {% endblock %}
+
+        <!-- Banner Image -->
+        {% block header_image %}
+        <tr>
+            <td>
+                <div>
+                    <img src="/static/images/1873_US_Forest_Map_1030x120.png">
+                </div>
+            </td>
+        </tr>
+        {% endblock %}
+       
+        <!-- Earth Engine Menu -->
+        <tr>
+            <td>
+                {% block ee_menu %}
+                {% endblock %}
+            </td>
+    </table>
+
+<!-- Forms -->
+<div style="font-family: Verdana; font-weight: bold; font-size: 12pt">
+<table width={{ width }}>
+    <tr width="100%">
+        <td> 
+            <!-- Region-Year Form. Only region can be selected. -->
+            {% block region_year_form %}
+            <form method="post">
+                {% csrf_token %}
+                <table>
+                    <tr>
+                        <td>
+                            <label for="{{ form.region.id_for_label }}">Region:</label>
+                            {{ form.region }}
+                        </td>
+                        <td>
+                            <label for="{{ form.dscrpt_txt.id_for_label }}">Text:</label>
+                            {{ form.dscrpt_txt }}
+                        </td>
+                        <td>
+                            <input type="submit" value="Submit"/>
+                        </td>
+                        <td width=600 align=right> <div style="font-weight: normal; font-size: 10pt">
+                            {{ form_help }} 
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            {% endblock %}
+        </td>
+    </tr>
+</table>
+</div>
+
+    <!-- Page Heading -->
+    <h1>
+        {% block page_heading %}
+        {% endblock %}
+    </h1>
+
+    <!-- Introductory Text -->
+
+    {% block intro_text %}
+    {% endblock %}
+
+
+    <table width={{ width }}>
+        <!-- Page Content -->
+        {% block page_content %}
+        {% endblock %}
+
+        <!-- Footer -->
+        <tr>
+            <td colspan="3"><hr></hr></td>
+        </tr>
+        <tr>
+            <td>
+                {% block footer %}
+                    <div style="font-family: Verdana; font-size: 10pt">
+                    W. R. Emanuel, University of Maryland
+                    College Park, Maryland, USA</br>
+                    E-Mail: wemanuel@umd.edu</br>
+                    Gmail: wemanuel@gmail.com</br>
+                    Copyright 2014-2015. All rights reserved.</div>
+                {% endblock %}
+            </td>
+            <td align="Center" valign="Middle">
+                {% block credits %}
+                Powered by Django
+                {% endblock %}
+            </td>
+            <td align="Right" valign="Middle">
+                {% block logo %}
+                    <img src="/static/images/UMD_logo_60px.png">
+                {% endblock %}
+            </td>
+        </tr>
+    </table>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
