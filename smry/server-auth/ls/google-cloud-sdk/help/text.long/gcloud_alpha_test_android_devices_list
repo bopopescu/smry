@@ -1,0 +1,24 @@
+NAME
+
+      gcloud alpha test android devices list - list all Android device
+         environments available for testing
+
+SYNOPSIS
+
+      gcloud alpha test android devices list [GLOBAL-FLAG ...]
+
+DESCRIPTION
+
+      (ALPHA) List all Android device environments available for testing.
+
+GLOBAL FLAGS
+
+      Run $ gcloud help for a description of flags available to all commands.
+
+NOTES
+
+      This command is in the Google Cloud SDK gcloud component. See installing
+      components if it is not installed.
+
+      This command is currently in ALPHA and may change without notice.
+
