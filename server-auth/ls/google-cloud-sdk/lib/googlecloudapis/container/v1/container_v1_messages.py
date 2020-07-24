@@ -27,19 +27,19 @@ class Cluster(_messages.Message):
       `172.16.0.0/12`.
     createTime: [Output only] The time the cluster was created, in
       [RFC3339](href='https://www.ietf.org/rfc/rfc3339.txt) text format.
-    currentMasterVersion: [Output only] The current software version of the
-      master endpoint.
+    currentMainVersion: [Output only] The current software version of the
+      main endpoint.
     currentNodeVersion: [Output only] The current version of the node software
       components. If they are currently at different versions because they're
       in the process of being upgraded, this reflects the minimum version of
       any of them.
     description: An optional description of this cluster.
-    endpoint: [Output only] The IP address of this cluster's Kubernetes master
+    endpoint: [Output only] The IP address of this cluster's Kubernetes main
       endpoint. The endpoint can be accessed from the internet at
-      `https://username:password@endpoint/`.  See the `masterAuth` property of
+      `https://username:password@endpoint/`.  See the `mainAuth` property of
       this resource for username and password information.
     initialClusterVersion: [Output only] The software version of Kubernetes
-      master and kubelets used in the cluster when it was first created. The
+      main and kubelets used in the cluster when it was first created. The
       version can be upgraded over time.
     initialNodeCount: The number of nodes to create in this cluster. You must
       ensure that your Compute Engine [resource quota](/compute/docs/resource-
@@ -51,7 +51,7 @@ class Cluster(_messages.Message):
       Currently available options:  * "logging.googleapis.com" - the Google
       Cloud Logging service * "none" - no logs will be exported from the
       cluster * "" - default value; the default is "logging.googleapis.com"
-    masterAuth: The authentication information for accessing the master.
+    mainAuth: The authentication information for accessing the main.
     monitoringService: The monitoring service that the cluster should write
       metrics to. Currently available options:  * "monitoring.googleapis.com"
       - the Google Cloud Monitoring service * "none" - no metrics will be
@@ -91,7 +91,7 @@ class Cluster(_messages.Message):
       RUNNING: The RUNNING state indicates the cluster has been created and is
         fully usable.
       RECONCILING: The RECONCILING state indicates that some work is actively
-        being done on the cluster, such as upgrading the master or node
+        being done on the cluster, such as upgrading the main or node
         software. Details can be found in the statusMessage field.
       STOPPING: The STOPPING state indicates the cluster is being deleted.
       ERROR: The ERROR state indicates the cluster may be unusable. Details
@@ -106,7 +106,7 @@ class Cluster(_messages.Message):
 
   clusterIpv4Cidr = _messages.StringField(1)
   createTime = _messages.StringField(2)
-  currentMasterVersion = _messages.StringField(3)
+  currentMainVersion = _messages.StringField(3)
   currentNodeVersion = _messages.StringField(4)
   description = _messages.StringField(5)
   endpoint = _messages.StringField(6)
@@ -114,7 +114,7 @@ class Cluster(_messages.Message):
   initialNodeCount = _messages.IntegerField(8, variant=_messages.Variant.INT32)
   instanceGroupUrls = _messages.StringField(9, repeated=True)
   loggingService = _messages.StringField(10)
-  masterAuth = _messages.MessageField('MasterAuth', 11)
+  mainAuth = _messages.MessageField('MainAuth', 11)
   monitoringService = _messages.StringField(12)
   name = _messages.StringField(13)
   network = _messages.StringField(14)
@@ -131,7 +131,7 @@ class ClusterUpdate(_messages.Message):
   """ClusterUpdate describes an update to the cluster.
 
   Fields:
-    desiredMasterVersion: The Kubernetes version to change the master to
+    desiredMainVersion: The Kubernetes version to change the main to
       (typically an upgrade). Use "-" to upgrade to the latest version
       supported by the server.
     desiredNodeVersion: The Kubernetes version to change the nodes to
@@ -139,7 +139,7 @@ class ClusterUpdate(_messages.Message):
       supported by the server.
   """
 
-  desiredMasterVersion = _messages.StringField(1)
+  desiredMainVersion = _messages.StringField(1)
   desiredNodeVersion = _messages.StringField(2)
 
 
@@ -296,8 +296,8 @@ class ListOperationsResponse(_messages.Message):
   operations = _messages.MessageField('Operation', 1, repeated=True)
 
 
-class MasterAuth(_messages.Message):
-  """The authentication information for accessing the master endpoint.
+class MainAuth(_messages.Message):
+  """The authentication information for accessing the main endpoint.
   Authentication can be done using HTTP basic auth or using client
   certificates.
 
@@ -309,10 +309,10 @@ class MasterAuth(_messages.Message):
     clusterCaCertificate: [Output only] Base64 encoded public certificate that
       is the root of trust for the cluster.
     password: The password to use for HTTP basic authentication when accessing
-      the Kubernetes master endpoint. Because the master endpoint is open to
+      the Kubernetes main endpoint. Because the main endpoint is open to
       the internet, you should create a strong password.
     username: The username to use for HTTP basic authentication when accessing
-      the Kubernetes master endpoint.
+      the Kubernetes main endpoint.
   """
 
   clientCertificate = _messages.StringField(1)
@@ -370,7 +370,7 @@ class Operation(_messages.Message):
       TYPE_UNSPECIFIED: Not set.
       CREATE_CLUSTER: Cluster create.
       DELETE_CLUSTER: Cluster delete.
-      UPGRADE_MASTER: A master upgrade.
+      UPGRADE_MASTER: A main upgrade.
       UPGRADE_NODES: A node upgrade.
       REPAIR_CLUSTER: Cluster repair.
     """
